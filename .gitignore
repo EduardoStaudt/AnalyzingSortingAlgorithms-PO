@@ -1,1 +1,12 @@
-.venv
+venv
+run.log
+run_java.log
+images/c
+algorithms/c
+out/
+archive/
+data/results/
+venv/
+benchmark
+.DS_Store
+data/results/
