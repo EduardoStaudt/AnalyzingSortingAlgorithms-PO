@@ -21,7 +21,7 @@ ALGORITMOS = {
     "radix":     {"titulo": "Radix Sort",      "arquivo": "radix_sort.png",     "sigla": "rs"},
 }
 
-ALGORITMOS_COMPARACAO = []
+ALGORITMOS_COMPARACAO = ['bubble', 'insertion','selection']
 
 
 ESTILO_POR_TIPO = {

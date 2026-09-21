@@ -23,7 +23,7 @@ source venv/bin/activate
 pip install numpy matplotlib
 ```
 
-Gerar os 18 datasets em `data/datasets/`:
+Gerar os datasets em `data/datasets/`:
 ```bash
 python scripts/generatorDataSets.py
 ```
@@ -68,26 +68,53 @@ Gerar os gráficos:
 ```bash
 python scripts/generatorGraphics.py
 ```
+
+### Segunda etapa: tempo e número de operações
+
+Nesta etapa foram testados apenas o quick, merge, radix e heap, em tamanhos maiores (de 1M até 2M), medindo também o número de comparações e trocas de cada algoritmo. Os algoritmos que contam operações ficam separados dos originais, em `algorithms/goops/` e `algorithms/java/ops/`, para não interferir na medição de tempo.
+
+Rodar o benchmark de operações em Go:
+```bash
+go run ./benchmark-ops
+```
+
+Rodar o benchmark de operações em Java:
+```bash
+javac -d out MainOps.java algorithms/java/*.java algorithms/java/ops/*.java
+java -cp out MainOps
+```
+
+Gerar os gráficos de tempo e operações:
+```bash
+python scripts/generatorGraphicsOps.py
+```
+
 ## Estrutura do projeto:
 ```
 AnalyzingSortingAlgorithms-PO/
 ├── algorithms/
 │   ├── go/          8 algoritmos em Go
-│   └── java/        8 algoritmos em Java
+│   ├── goops/       4 algoritmos em Go que contam operações
+│   └── java/
+│       ├── *.java   8 algoritmos em Java
+│       └── ops/     4 algoritmos em Java que contam operações
 ├── data/
 │   ├── datasets/    arquivos de números para ordenar
-│   └── results/     CSVs com os tempos medidos
+│   └── results/     CSVs com os tempos e operações medidos
 ├── images/
 │   ├── go/          gráficos gerados dos dados Go
-│   └── java/        gráficos gerados dos dados Java
+│   ├── java/        gráficos gerados dos dados Java
+│   └── ops/         gráficos de tempo e operações da segunda etapa
 ├── scripts/
 │   ├── generatorDataSets.py
-│   └── generatorGraphics.py
-├── main.go          entrypoint do benchmark Go
-├── Main.java        entrypoint do benchmark Java
+│   ├── generatorGraphics.py
+│   └── generatorGraphicsOps.py
+├── main.go          entrypoint do benchmark Go (tempo)
+├── benchmark-ops/   entrypoint do benchmark Go (tempo e operações)
+├── Main.java        entrypoint do benchmark Java (tempo)
+├── MainOps.java     entrypoint do benchmark Java (tempo e operações)
 └── README.md
 ```
- 
 
 Os 8 algoritmos implementados nas duas linguagens são bubble sort, insertion sort, selection sort, merge sort, quick sort, heap sort, shell sort e radix sort.
 
@@ -115,4 +142,3 @@ Busquei entender os pontos chave de cada algoritmo e aprender a implementá-los.
 
 ### Em que problemas esse conhecimento ira me ajudar?
 Sempre que eu precisar escolher uma estrutura de ordenação vou saber qual a melhor para cada caso. Com esse estudo eu sei que o insertion sort é muito bom para dados quase ordenados, sei que o radix ignora comparação e ganha em domínios limitados, e que o quick sort quebra se o pivô for mal escolhido.
-
